@@ -13,4 +13,7 @@ results
 
 npm-debug.log
 node_modules
+<<<<<<< HEAD
 public/photo/*
+=======
+>>>>>>> 45fca2ef766069b0513081ac1d29b6ba5b5a1411
