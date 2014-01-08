@@ -22,22 +22,12 @@ app.use(express.static(__dirname + '/public'));
 //app.use(app.errorHandler());
 
 
-/*
-app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/index.html');
-});
-*/
-
 app.get('/', function(req, res){
   res.render('index', { title: 'PhotoBooth' });
 });
 
 
 io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
 
   socket.on('countdown ready', function (data) {
 
