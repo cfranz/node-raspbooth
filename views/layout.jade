@@ -1,0 +1,49 @@
+doctype html
+html
+  head
+    title
+      block title
+
+    meta(name="apple-mobile-web-app-capable" content="yes")
+
+    link(rel='stylesheet', href='/lib/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/style.css')
+
+    script(type='text/javascript', src='/lib/jquery/jquery-2.0.3.min.js')
+    script(type='text/javascript', src='/js/jquery-countdown.js')
+    script(type='text/javascript', src='/socket.io/socket.io.js')
+
+    script(type='text/javascript').
+      var socket = io.connect('http://raspbooth:8080');
+      socket.on('news', function (data) {
+        console.log(data);
+        socket.emit('my other event', { my: 'data' });
+      });
+
+      socket.on('countdown start', function (data) {
+        $("#photo").attr("src", "");
+        $("#message").hide();
+        $("#countdown").show();
+        $("#countdown").countdown(countdown_ready, 5, "Foto in ", "s");
+        // $("#countdown").text("Countdown2");
+      });
+
+      socket.on('new photo', function (data) {
+        $("#message").hide();
+        $("#photo").attr("src", "/photo/" + data.photo);
+      });
+
+      var sprueche  = Array('Cheese!', 'Smile ;-)', 'L&auml;cheln!');
+
+      function countdown_ready () {
+        $("#countdown").hide();
+        $("#message").show().text( sprueche[ Math.floor( Math.random() * sprueche.length ) ]);
+        socket.emit('countdown ready', {  });
+      }
+
+
+
+    link(rel='stylesheet', href='/css/style.css')
+
+  body!= body
+    block content
