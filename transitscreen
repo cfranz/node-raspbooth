@@ -1,0 +1,8 @@
+#!/bin/sh
+unclutter &
+xset -dpms
+xset s off
+matchbox-window-manager &
+while true; do
+  midori -e Fullscreen -a http://localhost:8080
+done
