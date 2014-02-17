@@ -6,6 +6,7 @@ var express = require('express'),
 //    gphoto  = require('gphoto2'),
 //    gphoto2 = new gphoto.GPhoto2(),
     spawn   = require("child_process").spawn,
+    exec    = require("child_process").exec,
     fs      = require('fs'),
     sleep   = require('sleep');
 
@@ -58,19 +59,6 @@ app.get('/', function(req, res){
 
 io.sockets.on('connection', function (socket) {
 
-  socket.on('countdown ready', function (data) {
-
-/*
-
-    var filename = "123"
-    var capture = spawn("gphoto2", [
-                    "--capture-image-and-download",
-                    "--force-overwrite",
-                    "--filename=" + filename
-                  ], {cwd: cwd});
-*/
-
-  });
 });
 
 
@@ -97,17 +85,38 @@ function step_countdown() {
 function step_photo() {
     console.log("step_photo() - START");
 
+
+    var filename = "123.jpg"
+
+    var capture = exec("gphoto2 --capture-image-and-download --force-overwrite --filename=/opt/raspbooth/public/photo/" + filename,
+        function(error, stdout, stderr) {
+            io.sockets.emit('photo', { "photo": filename });
+            step_ready();
+        });
+
+/*
+    var capture = spawn("gphoto2", [
+                    "--capture-image-and-download",
+                    "--force-overwrite",
+                    "--filename=/opt/raspbooth/public/photo/" + filename
+                  ], {cwd: undefined});
+    io.sockets.emit('photo', { "photo": filename });
+*/
+
+/*
     // testing only
     sleep.sleep(5);
-
     var img = images[ Math.floor( Math.random() * images.length ) ];
     io.sockets.emit('photo', { "photo": img });
-    console.log("step_photo() - END");
-    step_ready();
+*/
+
+//    console.log("step_photo() - END");
+//    step_ready();
 };
 
 function step_ready() {
     console.log("step_ready() - START");
+//    io.sockets.emit('photo', { "photo": filename });
     photo_in_progress = false;
     console.log("step_ready() - END");
 };
