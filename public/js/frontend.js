@@ -1,5 +1,6 @@
       $(document).ready(function() {
-        $("#message").hide();
+        $("#message1").hide();
+        $("#message2").hide();
         $("#countdown").hide();
         $("#photo").hide();
       });
@@ -9,22 +10,24 @@
       socket.on('countdown', function (data) {
         $("#photo").attr("src", "");
         $("#photo").hide();
-        $("#message").hide();
+        $("#message1").hide();
+        $("#message2").hide();
 
         $("#countdown").show();
         $("#countdown").html("Foto in " + data.value + "s");
       });
 
-      socket.on('message', function (data) {
+      socket.on('message1', function (data) {
         $("#countdown").hide();
         $("#photo").hide();
 
-        $("#message").show().text(data.value);
+        $("#message1").show().text(data.value);
       });
 
       socket.on('photo', function (data) {
         $("#countdown").hide();
-        $("#message").hide();
+        $("#message1").hide();
+        $("#message2").hide();
 
         $("#photo").attr("src", "/photo/" + data.photo).show();
       });
@@ -33,7 +36,7 @@
 
       function countdown_ready () {
         $("#countdown").hide();
-        $("#message").show().text( sprueche[ Math.floor( Math.random() * sprueche.length ) ]);
+        $("#message1").show().text( sprueche[ Math.floor( Math.random() * sprueche.length ) ]);
         socket.emit('countdown ready', {  });
       }
 
