@@ -8,7 +8,8 @@ var express = require('express'),
     spawn   = require("child_process").spawn,
     exec    = require("child_process").exec,
     fs      = require('fs'),
-    sleep   = require('sleep');
+    sleep   = require('sleep'),
+    config  = require('./config/config.local.js');
 
 /*
  * ! buttons 18-20 are not implemented yet
@@ -53,7 +54,10 @@ app.use(express.static(__dirname + '/public'));
  * routing of urls
  */
 app.get('/', function(req, res){
-  res.render('index', { title: 'PhotoBooth' });
+  res.render('index', {
+                        title: config.title,
+                        subtitle: config.subtitle
+                      });
 });
 
 
@@ -127,6 +131,7 @@ function step_ready() {
 /*
  * watch the button and take a new photo if it is pressed
  */
+/*
 button_photo.watch(function(err, value) {
     if (err) exit();
     button_photo.read(function(err, value) {
@@ -140,6 +145,7 @@ button_photo.watch(function(err, value) {
         if (value == 0) {};
     });
 });
+*/
 
 function exit() {
     button_photo.unexport();
