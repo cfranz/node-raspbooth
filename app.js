@@ -1,3 +1,16 @@
+/*
+ * RaspBooth - Photobooth on a Raspberry Pi with node.js
+ *
+ * Download from https://github.com/cfranz/node-raspbooth
+ *
+ * For additional information see
+ * ./README.md
+ * ./INSTALL.md
+ * ./LICENSE
+ *
+ */
+
+
 var express = require('express'),
     app     = express(),
     server  = require('http').createServer(app),
@@ -18,16 +31,10 @@ var express = require('express'),
  * button19 => send link via email
  * button20 => print image
  */
-var button_photo = new gpio(17, 'in', 'both');
+var button_photo = new gpio(config.gpio_photo, 'in', 'both');
 
 var photo_in_progress = false;
-var messages = Array(
-                    "Cheese!",
-                    "Smile ;-)",
-                    "Lachen!",
-                    "Grinsen",
-                    "Zunge raus"
-                    );
+var messages = config.messages;
 
 /*
  * for testing purposes, showing a predefined image instead of taking a new one
@@ -73,7 +80,7 @@ io.sockets.on('connection', function (socket) {
 function step_countdown() {
     console.log("step_countdown() - START");
 
-    for (var c=5; c>=0; c--) {
+    for (var c = config.countdown; c>=0; c--) {
         console.log("step_countdown() - VALUE " + c);
         io.sockets.emit('countdown', { "value": c });
         sleep.sleep(1);
