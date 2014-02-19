@@ -9,7 +9,9 @@ First you need to install node.js on your Raspberry Pi.
 Check out the GitHub-Repository to /opt/raspbooth
 
 Run
+
 	npm install
+
 to install the required node.js modules
 
 ## Run the app
