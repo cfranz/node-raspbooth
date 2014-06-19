@@ -10,6 +10,7 @@
  *
  */
 
+var base    = __dirname;
 
 var express = require('express'),
     app     = express(),
@@ -22,7 +23,9 @@ var express = require('express'),
     exec    = require("child_process").exec,
     fs      = require('fs'),
     sleep   = require('sleep'),
-    config  = require('./config/config.local.js');
+    config  = require(base + '/config/config.local.js'),
+    moment  = require('moment'),
+    mv      = require('mv');
 
 /*
  * ! buttons 18-20 are not implemented yet
@@ -35,6 +38,11 @@ var button_photo = new gpio(config.gpio_photo, 'in', 'both');
 
 var photo_in_progress = false;
 var messages = config.messages;
+
+var current_photo = fs.readFileSync(base + '/config/current_photo','utf8');
+var filename = "IMG_PB_" + String("0000" + current_photo).slice(-5) + ".jpg";
+var filename_old = filename;
+
 
 /*
  * for testing purposes, showing a predefined image instead of taking a new one
@@ -97,9 +105,26 @@ function step_photo() {
     console.log("step_photo() - START");
 
 
-    var filename = "123.jpg"
+//   var filename = "123.jpg"
+//   var filename = moment().format("YYMMDD-HHmmss") + ".jpg";
 
-    var capture = exec("gphoto2 --capture-image-and-download --force-overwrite --filename=/opt/raspbooth/public/photo/" + filename,
+    current_photo++;    
+    filename_old = filename;
+    filename = "IMG_PB_" + String("0000" + current_photo).slice(-5) + ".jpg";
+
+    console.log("filename_old: " + filename_old);
+    console.log("filename: " + filename);
+
+    exec("echo " + current_photo + " > " + base + "/config/current_photo");
+//    exec("sudo " + base + "/move_photo.sh >> " + base + "/move_photo.log");
+
+    fs.exists('/opt/raspbooth/public/photo/' + filename_old, function(exists) {
+      if (exists) {
+        mv('/opt/raspbooth/public/photo/' + filename_old, '/media/usb/photo/' + filename_old, {mkdirp: true});
+      }
+    });
+
+    var capture = exec("gphoto2 --capture-image-and-download --force-overwrite --filename=" + base + "/public/photo/" + filename,
         function(error, stdout, stderr) {
             io.sockets.emit('photo', { "photo": filename });
             step_ready();
@@ -129,6 +154,9 @@ function step_ready() {
     console.log("step_ready() - START");
 //    io.sockets.emit('photo', { "photo": filename });
     photo_in_progress = false;
+
+    exec("sudo chown pi:users /opt/raspbooth/public/photo/*");
+
     console.log("step_ready() - END");
 };
 
@@ -138,7 +166,7 @@ function step_ready() {
 /*
  * watch the button and take a new photo if it is pressed
  */
-/*
+
 button_photo.watch(function(err, value) {
     if (err) exit();
     button_photo.read(function(err, value) {
@@ -152,7 +180,7 @@ button_photo.watch(function(err, value) {
         if (value == 0) {};
     });
 });
-*/
+
 
 function exit() {
     button_photo.unexport();
