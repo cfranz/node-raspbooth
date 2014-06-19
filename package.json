@@ -1,6 +1,6 @@
 {
   "name" : "RaspBooth.js",
-  "version" : "0.0.2",
+  "version" : "0.0.3",
   "author": "Carsten Franz <support@carsten-franz.eu>",
   "description": "Building a photobooth using node.js on a Raspberry Pi",
   "dependencies" : {
@@ -9,7 +9,9 @@
     "onoff": "0.3.x",
     "jade": "1.0.x",
     "gphoto2": "0.1.x",
-    "sleep": "1.x"
+    "sleep": "1.x",
+    "moment": "2.x",
+    "mv": "2.x"
   },
   "license": "MIT",
   "engines": {
