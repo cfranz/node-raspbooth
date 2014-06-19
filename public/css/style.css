@@ -9,16 +9,16 @@ body {
 
 /* Wrapper for page content to push down footer */
 #wrap {
-  min-height: 100%;
-  height: auto;
+//  min-height: 100%;
+//  height: auto;
   /* Negative indent footer by its height */
-  margin: 0 auto -75px;
+//  margin: 0 auto -75px;
   /* Pad bottom by footer height */
   padding: 0 0 75px;
 }
 
 /* Set the fixed height of the footer here */
-#footer {
+#header {
   height: 75px;
   background-color: #f5f5f5;
 }
@@ -31,4 +31,12 @@ body {
 #countdown, #message {
  font-size:70px;
  margin-top:100px;
+}
+
+#button-galerie, #button-email, #button-print {
+ display:none;
+}
+
+h1 {
+ display:none;
 }

@@ -4,13 +4,28 @@ block title
   = title
 
 block content
+  div#header
+    div.container
+      div.row.top-buffer
+        div.col-md-3.col-md-offset-0.col-sm-3.col-sm-offset-0.btn.btn-lg.btn-primary.active#button-photo
+          span.glyphicon.glyphicon-camera
+          |  Neues Foto
+        div.col-md-2.col-md-offset-1.col-sm-2.col-sm-offset-1.btn.btn-lg.btn-info.disabled#button-galerie
+          span.glyphicon.glyphicon-picture
+          |  Galerie
+        div.col-md-2.col-md-offset-1.col-sm-2.col-sm-offset-1.btn.btn-lg.btn-info.disabled#button-email
+          span.glyphicon.glyphicon-send
+          |  Email
+        div.col-md-2.col-md-offset-1.col-sm-2.col-sm-offset-1.btn.btn-lg.btn-info.disabled#button-print
+          span.glyphicon.glyphicon-print
+          |  Druck
+
   div#wrap
     div.container
       div.content
         div.page-header
           h1= title
-            small  Keep smiling 
-              span.glyphicon.glyphicon-thumbs-up
+            small!= subtitle
         div.row
           div.col-md-12.col-sm-12
             div#countdown.btn.btn-lg.btn-danger.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2
@@ -20,19 +35,3 @@ block content
             div#message2.btn.btn-lg.btn-success.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2
               |  Processing picture
             img#photo(width="100%")
-
-  div#footer
-    div.container
-      div.row.top-buffer
-        div.col-md-3.col-md-offset-0.col-sm-3.col-sm-offset-0.btn.btn-lg.btn-primary.active
-          span.glyphicon.glyphicon-camera
-          |  Neues Foto
-        div.col-md-2.col-md-offset-1.col-sm-2.col-sm-offset-1.btn.btn-lg.btn-info.disabled
-          span.glyphicon.glyphicon-picture
-          |  Galerie
-        div.col-md-2.col-md-offset-1.col-sm-2.col-sm-offset-1.btn.btn-lg.btn-info.disabled
-          span.glyphicon.glyphicon-send
-          |  Email
-        div.col-md-2.col-md-offset-1.col-sm-2.col-sm-offset-1.btn.btn-lg.btn-info.disabled
-          span.glyphicon.glyphicon-print
-          |  Druck
