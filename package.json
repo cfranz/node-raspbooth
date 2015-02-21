@@ -1,7 +1,7 @@
 {
-  "name" : "RaspBooth.js",
-  "version" : "0.0.3",
-  "author": "Carsten Franz <support@carsten-franz.eu>",
+  "name" : "node-raspbooth",
+  "version" : "0.0.4",
+  "author": "Carsten Franz <node-raspbooth@carsten-franz.eu>",
   "description": "Building a photobooth using node.js on a Raspberry Pi",
   "dependencies" : {
     "socket.io": "0.9.x",
